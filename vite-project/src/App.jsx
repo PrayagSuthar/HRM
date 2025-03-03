@@ -14,6 +14,7 @@ import Start from './Components/Start'
 import EmployeeLogin from './Components/EmployeeLogin'
 import EmployeeDetail from './Components/EmployeeDetail'
 import PrivateRoute from './Components/PrivateRoute'
+import LeaveManagement from './Components/LeaveManagement'
 // import axios from 'axios'
 // import {useEffect} from 'react'
 
@@ -52,6 +53,7 @@ function App() {
         <Route path='/dashboard/add_category' element={<AddCategory />}></Route>
         <Route path='/dashboard/add_employee' element={<AddEmployee />}></Route>
         <Route path='/dashboard/edit_employee/:Id' element={<EditEmployee />}></Route>
+        <Route path='/dashboard/leave' element={<LeaveManagement />}></Route>
         {/* <Route path='/employee_detail/:Id'></Route> */}
       </Route>
     </Routes>

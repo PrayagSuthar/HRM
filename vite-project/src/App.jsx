@@ -15,6 +15,7 @@ import EmployeeLogin from './Components/EmployeeLogin'
 import EmployeeDetail from './Components/EmployeeDetail'
 import PrivateRoute from './Components/PrivateRoute'
 import LeaveManagement from './Components/LeaveManagement'
+import EmployeeDashboard from './Components/EmployeeDashboard'
 // import axios from 'axios'
 // import {useEffect} from 'react'
 
@@ -41,6 +42,7 @@ function App() {
       <Route path="/adminlogin" element={<Login/>}></Route>
       <Route path='/employee_login' element={<EmployeeLogin/>}></Route>
       <Route path='/detail/:Id' element={<EmployeeDetail />}></Route>
+      <Route path = '/employee-dashboard/:Id' element={<EmployeeDashboard /> }></Route>
       <Route path="/dashboard" element={
         <PrivateRoute>
           <Dashboard/>

@@ -134,6 +134,32 @@ router.post("/employee_login", async (req, res) => {
     }
 });
 
+router.get('/employee-dashboard/:Id', async (req, res) => {
+  try {
+      const { Id } = req.params;
+
+      // Validate if the Id is a valid GUID
+      if (!/^[0-9a-fA-F-]{36}$/.test(Id)) {
+          return res.status(400).json({ Status: false, Error: "Invalid Employee ID format" });
+      }
+
+      const pool = await poolPromise;
+      const result = await pool.request()
+          .input('Id', sql.UniqueIdentifier, Id)
+          .query("SELECT * FROM EmployeeInfo WHERE Id = @Id");
+
+      // if (result.recordset.length === 0) {
+      //     return res.status(404).json({ Status: false, Error: "Employee not found" });
+      // }
+
+      return res.json(result.recordset[0]); // Return single employee object
+
+  } catch (err) {
+      console.error("Query Error:", err);
+      return res.status(500).json({ Status: false, Error: "Internal Server Error" });
+  }
+});
+
   
   router.get('/logout', (req, res) => {
     res.clearCookie('token')

@@ -313,7 +313,7 @@ const EmployeeLogin = () => {
                 const userId=response.data.Id;
 
                 if(userId){
-                    navigate(`/detail/${userId}`);
+                    navigate(`/employee-dashboard/${userId}`);
                 } else {
                     setError("User ID not found in response");
                 }

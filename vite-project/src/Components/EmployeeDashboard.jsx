@@ -1,63 +1,15 @@
-// // eslint-disable-next-line no-unused-vars
-// import React from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
-
-
-// const EmployeeDashboard = () => {
-//     return (
-//         <div className="container mt-4">
-//             <header className="bg-primary text-white text-center p-3 rounded">
-//                 <h1>Employee Dashboard</h1>
-//             </header>
-//             <nav className="mt-3">
-//                 <ul className="nav nav-pills justify-content-center">
-//                     <li className="nav-item">
-//                         <a className="nav-link active" href="#profile">Profile</a>
-//                     </li>
-//                     <li className="nav-item">
-//                         <a className="nav-link" href="#attendance">Attendance</a>
-//                     </li>
-//                     <li className="nav-item">
-//                         <a className="nav-link" href="#performance">Performance</a>
-//                     </li>
-//                     <li className="nav-item">
-//                         <a className="nav-link" href="#leave">Leave Management</a>
-//                     </li>
-//                 </ul>
-//             </nav>
-//             <main className="mt-4">
-//                 <section id="profile" className="card p-3 mb-3 shadow-sm">
-//                     <h2>Profile Information</h2>
-//                     {/* Employee profile details go here */}
-//                 </section>
-//                 <section id="attendance" className="card p-3 mb-3 shadow-sm">
-//                     <h2>Attendance Records</h2>
-//                     {/* Attendance details go here */}
-//                 </section>
-//                 <section id="performance" className="card p-3 mb-3 shadow-sm">
-//                     <h2>Performance Metrics</h2>
-//                     {/* Performance metrics go here */}
-//                 </section>
-//                 <section id="leave" className="card p-3 mb-3 shadow-sm">
-//                     <h2>Leave Management</h2>
-//                     {/* Leave management features go here */}
-//                 </section>
-//             </main>
-//         </div>
-//     );
-// };
-
-// export default EmployeeDashboard;
-
 
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import { Link,Outlet,useNavigate } from 'react-router-dom'
 import "bootstrap-icons/font/bootstrap-icons.css"
 import axios from 'axios'
+// import EmployeeAttendance from './EmployeeAttendance'
+// import {useParams} from "react-router-dom"
 
 const Dashboard = () => {
   const navigate = useNavigate()
+  
   axios.defaults.withCredentials=true
   const handleLogout = () => {
     axios.get('http://localhost:3000/auth/logout')
@@ -87,7 +39,7 @@ const Dashboard = () => {
             >
               <li className="w-100">
                 <Link
-                  to="/dashboard"
+                  to=""
                   className="nav-link text-white px-0 align-middle"
                 >
                   <i className="fs-4 bi-speedometer2 ms-2"></i>
@@ -116,19 +68,26 @@ const Dashboard = () => {
               </li> */}
               <li className="w-100">
                 <Link
-                  to="/dashboard/profile"
+                  to=""
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-person ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Profile</span>
                 </Link>
               </li>
-              <Link to="/dashboard/leave" className="nav-link px-0 align-middle text-white">
+              <li className="w-100">
+              <Link to="leave-management" className="nav-link px-0 align-middle text-white">
   <i className="fs-4 bi-calendar-check ms-2"></i>
-  <span className="ms-2 d-none d-sm-inline">Leave Management</span>
+  <span className="ms-2 d-none d-sm-inline">Apply Leave</span>
 </Link>
-
+</li> 
               
+              <li className="w-100">
+                <Link to="attendance" className="nav-link px-0 align-middle text-white">
+                <i className="fs-4 bi-calendar-check ms-2"></i>
+                <span className="ms-2 d-none d-sm-inline">Attandance</span>
+                </Link>
+              </li>
               <li className="w-100"  onClick={handleLogout}>
               <Link
                   className="nav-link px-0 align-middle text-white"
@@ -145,6 +104,7 @@ const Dashboard = () => {
                 <h4>Emoployee Management System</h4>
             </div>
             <Outlet />
+            {/* {employeeId && <EmployeeAttendance employeeId={employeeId} />} */}
         </div>
       </div>
     </div>
@@ -152,3 +112,4 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+

@@ -39,13 +39,7 @@ router.post("/adminlogin", async (req, res) => {
 
     const user = result.recordset[0];
 
-    // Check password using bcrypt
-    // const isMatch = await bcrypt.compare(Password, user.Password);
-    // if (!isMatch) {
-    //   return res.json({ loginStatus: false, Error: "Invalid email or password" });
-    // }
-
-    // Generate JWT Token
+   
     const token = jwt.sign({ role: "admin", email: user.Email ,Id:user.Id}, "jwt_secret_key", { expiresIn: "1d" });
 
     res.cookie("token", token, { httpOnly: true, secure: false });
@@ -95,7 +89,7 @@ if (!fs.existsSync(uploadDir)) {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, uploadDir); // Use absolute path to avoid errors
+      cb(null, uploadDir); 
   },
   filename: (req, file, cb) => {
       cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
@@ -103,76 +97,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//       cb(null, 'public/Images')
-//   },
-//   filename: (req, file, cb) => {
-//       cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname))
-//   }
-// })
-// const upload = multer({
-//   storage: storage
-// })
-
-// router.post('/add_employee', upload.single('Profile'), async (req, res) => {
-//   try {
-//       const pool = await poolPromise;
-//       const employeeId= uuidv4();
-//       const role = req.body.Role && validate(req.body.Role) ? req.body.Role: null ;
-//       const teamLeader = req.body.TeamLeader && validate(req.body.TeamLeader) ? req.body.TeamLeader : null;
-//       // Hash the password before inserting into the database
-//       const hashedPassword = await bcrypt.hash(req.body.Password, 10);
-
-//       const result = await pool.request()
-//           .input('Id', sql.UniqueIdentifier, employeeId) // Generate a new UniqueIdentifier
-//           .input('Firstname', sql.NVarChar(50), req.body.Firstname)
-//           .input('Lastname', sql.NVarChar(50), req.body.Lastname)
-//           .input('Email', sql.NVarChar(100), req.body.Email)
-//           .input('Password', sql.NVarChar(255), hashedPassword)
-//           .input('MobileNo', sql.BigInt, req.body.MobileNo)
-//           .input('Profile', sql.NVarChar(255), req.file ? req.file.filename : null)
-//           .input('IsActive', sql.Bit, req.body.IsActive)
-//           .input('IsDeleted', sql.Bit, req.body.IsDeleted)
-//           .input('EmployeeType', sql.NVarChar(20), req.body.EmployeeType)
-//           .input('Salary', sql.Float, req.body.Salary)
-//           .input('CreatedAt', sql.DateTime, new Date()) // Set current date
-//           .input('UpdatedAt', sql.DateTime, new Date()) // Set current date
-//           .input('Role', sql.UniqueIdentifier, role )
-//           .input('TotalAvailablePaidLeave', sql.Int, req.body.TotalAvailablePaidLeave)
-//           .input('TotalPaidLeave', sql.Int, req.body.TotalPaidLeave)
-//           .input('TotalUnpaidLeave', sql.Int, req.body.TotalUnpaidLeave)
-//           .input('TeamLeader', sql.UniqueIdentifier, teamLeader)
-//           .input('TotalAvailableOptionalLeave', sql.Int, req.body.TotalAvailableOptionalLeave)
-//           .input('Address', sql.NVarChar(255), req.body.Address)
-//           .input('Birthdate', sql.Date, req.body.Birthdate)
-//           .input('Designation', sql.NVarChar(50), req.body.Designation)
-//           .input('EMPCode', sql.NVarChar(10), req.body.EMPCode)
-//           .input('ResignationDate', sql.Date, req.body.ResignationDate || null)
-//           .input('Category_Id', sql.Int, req.body.Category_Id || null) // Category_Id as FK
-//           .query(`INSERT INTO EmployeeInfo (
-//                   Id, Firstname, Lastname, Email, Password, MobileNo, Profile, 
-//                   IsActive, IsDeleted, EmployeeType, Salary, CreatedAt, UpdatedAt, 
-//                   Role, TotalAvailablePaidLeave, TotalPaidLeave, TotalUnpaidLeave, 
-//                   TeamLeader, TotalAvailableOptionalLeave, Address, Birthdate, 
-//                   Designation, EMPCode, ResignationDate, Category_Id
-//               ) 
-//               VALUES (
-//                   @Id, @Firstname, @Lastname, @Email, @Password, @MobileNo, @Profile, 
-//                   @IsActive, @IsDeleted, @EmployeeType, @Salary, @CreatedAt, @UpdatedAt, 
-//                   @Role, @TotalAvailablePaidLeave, @TotalPaidLeave, @TotalUnpaidLeave, 
-//                   @TeamLeader, @TotalAvailableOptionalLeave, @Address, @Birthdate, 
-//                   @Designation, @EMPCode, @ResignationDate, @Category_Id
-//               )`);
-
-//       return res.json({ Status: true });
-
-//   } catch (err) {
-//       console.error("Query Error:", err);
-//       return res.json({ Status: false, Error: "Query Error" });
-//   }
-// });
 
 
 router.post('/add_employee', upload.single('Profile'), async (req, res) => {
@@ -185,7 +109,7 @@ router.post('/add_employee', upload.single('Profile'), async (req, res) => {
 
       const role = req.body.Role && validate(req.body.Role) ? req.body.Role : null;
       const teamLeader = req.body.TeamLeader && validate(req.body.TeamLeader) ? req.body.TeamLeader : null;
-      // const hashedPassword = await bcrypt.hash(req.body.Password, 10);
+      
       const profilePath = req.file ? `/uploads/${req.file.filename}` : null;
 
       const result = await pool.request()
@@ -250,19 +174,7 @@ router.get('/employee', async (req, res) => {
   }
 });
 
-// router.get('/employee/:Id',async(req,res) => {
-  
-//   try {
-//     const Id = req.params.Id;
-//     const pool = await poolPromise;
-//     const result = await pool.request().query("SELECT * FROM EmployeeInfo WHERE Id = @Id",Id);
 
-//     return res.json({ Status: true, Result: result.recordset});
-// } catch (err) {
-//     console.error("Query Error:", err);
-//     return res.json({ Status: false, Error: "Query Error" });
-// }
-// })
 
 router.get('/employee/:Id', async (req, res) => {
   try {
@@ -270,7 +182,7 @@ router.get('/employee/:Id', async (req, res) => {
       const pool = await poolPromise;
       
       const result = await pool.request()
-          .input('Id', sql.VarChar, Id) // Declare the @Id parameter properly
+          .input('Id', sql.VarChar, Id) 
           .query("SELECT * FROM EmployeeInfo WHERE Id = @Id");
 
       return res.json({ Status: true, Result: result.recordset });
@@ -346,7 +258,7 @@ router.delete('/delete_employee/:Id', async (req, res) => {
       const pool = await poolPromise;
       
       const result = await pool.request()
-          .input('Id', sql.VarChar, Id) // Declare the @Id parameter properly
+          .input('Id', sql.VarChar, Id) 
           .query("DELETE FROM EmployeeInfo WHERE Id = @Id");
 
       return res.json({ Status: true, Result: result.recordset });

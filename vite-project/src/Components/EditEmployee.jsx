@@ -13,17 +13,17 @@ const EditEmployee = () => {
         Lastname: "",
         Email: "",
         MobileNo: "",
-         // Profile handled separately for file upload
+         
         IsActive: false,
         IsDeleted: false,
         EmployeeType: "FULLTIME",
         Category_Id: "",
         Salary: "",
-        Role: null, // Ensure this is either a valid GUID or null
+        Role: null, 
         TotalAvailablePaidLeave: "",
         TotalPaidLeave: "",
         TotalUnpaidLeave: "",
-        TeamLeader: null, // Ensure this is either a valid GUID or null
+        TeamLeader: null, 
         TotalAvailableOptionalLeave: "",
         Address: "",
         Birthdate: "",
@@ -81,10 +81,10 @@ const EditEmployee = () => {
     const { name, value, type, checked } = e.target;
     let finalValue = value;
 
-    // Convert empty string to null for nullable fields
+    
     if (value === "") finalValue = null;
 
-    // Convert checkboxes to boolean values
+    
     if (type === "checkbox") finalValue = checked;
 
     setEmployee({ ...employee, [name]: finalValue });
@@ -114,10 +114,7 @@ const EditEmployee = () => {
         {/* <input type="password" id="Password" name="Password" className="input-field" placeholder="Password"  required /> */}
         <input type="number" id="MobileNo" name="MobileNo" className="input-field" placeholder="Mobile No" onChange={handleChange} value={employee.MobileNo} required />
         
-        {/* Profile Picture Upload */}
-        {/* <input type="file" id="Profile" name="Profile" className="input-field"  /> */}
-
-        {/* Active & Deleted Status */}
+      
         <label>
           <input type="checkbox" id="IsActive" name="IsActive" onChange={handleChange} className="checkbox" checked={employee.IsActive}  value={employee.IsActive}/>
           Active
@@ -127,7 +124,7 @@ const EditEmployee = () => {
           Deleted
         </label>
 
-        {/* Employee Type */}
+       
         <select id="EmployeeType" name="EmployeeType" onChange={handleChange} className="select-field"  value={employee.EmployeeType} required>
           <option value="FULLTIME">Full-Time</option>
           <option value="PARTTIME">Part-Time</option>
@@ -136,14 +133,14 @@ const EditEmployee = () => {
 
         <input type="number" id="Salary" name="Salary" className="input-field" onChange={handleChange} placeholder="Salary" value={employee.Salary} required />
 
-        {/* Role Selection */}
+        
         <select id="Role" name="Role" onChange={handleChange} className="select-field" value={employee.Role}>
           <option value="">Select Role</option>
           <option value="123e4567-e89b-12d3-a456-426614174000">Admin</option>
           <option value="789e4567-e89b-12d3-a456-426614174111">Manager</option>
         </select>
 
-        {/* Team Leader Selection */}
+        
         <select id="TeamLeader" name="TeamLeader" onChange={handleChange} className="select-field" value={employee.TeamLeader}>
           <option value="">Select Team Leader</option>
           <option value="567e4567-e89b-12d3-a456-426614174222">John Doe</option>
@@ -168,159 +165,7 @@ const EditEmployee = () => {
   )
 }
 
-
-// import  { useState } from "react";
-// import axios from "axios";
-// import {useNavigate} from 'react-router-dom';
-
-// const EditEmployee = () => {
-//   const [employee, setEmployee] = useState({
-//     Firstname: "",
-//     Lastname: "",
-//     Email: "",
-//     Password: "",
-//     MobileNo: "",
-//     Profile: null, // Profile handled separately for file upload
-//     IsActive: false,
-//     IsDeleted: false,
-//     EmployeeType: "FULLTIME",
-//     Category_Id: "",
-//     Salary: "",
-//     Role: null, // Ensure this is either a valid GUID or null
-//     TotalAvailablePaidLeave: "",
-//     TotalPaidLeave: "",
-//     TotalUnpaidLeave: "",
-//     TeamLeader: null, // Ensure this is either a valid GUID or null
-//     TotalAvailableOptionalLeave: "",
-//     Address: "",
-//     Birthdate: "",
-//     Designation: "",
-//     EMPCode: "",
-//     ResignationDate: null,
-//   });
-
-//   const [selectedFile, setSelectedFile] = useState(null);
-//   const navigate=useNavigate()
-
-//   // Handle input change
-//   const handleChange = (e) => {
-//     const { name, value, type, checked } = e.target;
-//     let finalValue = value;
-
-//     // Convert empty string to null for nullable fields
-//     if (value === "") finalValue = null;
-
-//     // Convert checkboxes to boolean values
-//     if (type === "checkbox") finalValue = checked;
-
-//     setEmployee({ ...employee, [name]: finalValue });
-//   };
-
-//   // Handle file input change
-//   const handleFileChange = (e) => {
-//     setSelectedFile(e.target.files[0]);
-//   };
-
-//   // Handle form submission
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const formData = new FormData();
-
-//     // Append all form fields
-//     Object.entries(employee).forEach(([key, value]) => {
-//       formData.append(key, value === "" ? null : value);
-//     });
-
-//     // Append file if selected
-//     if (selectedFile) {
-//       formData.append("Profile", selectedFile);
-//     }
-
-//     console.log("Final Payload:", Object.fromEntries(formData));
-
-//     try {
-//       const response = await axios.post("http://localhost:3000/auth/add_employee", formData, {
-//         headers: { "Content-Type": "multipart/form-data" },
-//       }).then(result => {
-//         if(result.data.Status){
-//           navigate('/dashboard/employee')
-//         } else {
-//           alert(result.data.Error)
-//         }
-//       })
-
-//       console.log("Response:", response.data);
-//     } catch (error) {
-//       console.error("Error adding employee:", error);
-//     }
-//   };
-
-//   return (
-//     <div className="add-employee-container">
-//       <h2 className="form-title">Add Employee</h2>
-//       <form onSubmit={handleSubmit} encType="multipart/form-data">
-//         <input type="text" id="Firstname" name="Firstname" className="input-field" placeholder="First Name" onChange={handleChange} required />
-//         <input type="text" id="Lastname" name="Lastname" className="input-field" placeholder="Last Name" onChange={handleChange} required />
-//         <input type="email" id="Email" name="Email" className="input-field" placeholder="Email" onChange={handleChange} required />
-//         <input type="password" id="Password" name="Password" className="input-field" placeholder="Password" onChange={handleChange} required />
-//         <input type="number" id="MobileNo" name="MobileNo" className="input-field" placeholder="Mobile No" onChange={handleChange} required />
-        
-//         {/* Profile Picture Upload */}
-//         <input type="file" id="Profile" name="Profile" className="input-field" onChange={handleFileChange} />
-
-//         {/* Active & Deleted Status */}
-//         <label>
-//           <input type="checkbox" id="IsActive" name="IsActive" className="checkbox" checked={employee.IsActive} onChange={handleChange} />
-//           Active
-//         </label>
-//         <label>
-//           <input type="checkbox" id="IsDeleted" name="IsDeleted" className="checkbox" checked={employee.IsDeleted} onChange={handleChange} />
-//           Deleted
-//         </label>
-
-//         {/* Employee Type */}
-//         <select id="EmployeeType" name="EmployeeType" className="select-field" onChange={handleChange} required>
-//           <option value="FULLTIME">Full-Time</option>
-//           <option value="PARTTIME">Part-Time</option>
-//           <option value="CONTRACT">Contract</option>
-//         </select>
-
-//         <input type="number" id="Salary" name="Salary" className="input-field" placeholder="Salary" onChange={handleChange} required />
-
-//         {/* Role Selection */}
-//         <select id="Role" name="Role" className="select-field" onChange={handleChange}>
-//           <option value="">Select Role</option>
-//           <option value="123e4567-e89b-12d3-a456-426614174000">Admin</option>
-//           <option value="789e4567-e89b-12d3-a456-426614174111">Manager</option>
-//         </select>
-
-//         {/* Team Leader Selection */}
-//         <select id="TeamLeader" name="TeamLeader" className="select-field" onChange={handleChange}>
-//           <option value="">Select Team Leader</option>
-//           <option value="567e4567-e89b-12d3-a456-426614174222">John Doe</option>
-//           <option value="987e4567-e89b-12d3-a456-426614174333">Jane Smith</option>
-//         </select>
-
-//         <input type="number" id="TotalAvailablePaidLeave" name="TotalAvailablePaidLeave" className="input-field" placeholder="Total Available Paid Leave" onChange={handleChange} required />
-//         <input type="number" id="TotalPaidLeave" name="TotalPaidLeave" className="input-field" placeholder="Total Paid Leave" onChange={handleChange} required />
-//         <input type="number" id="TotalUnpaidLeave" name="TotalUnpaidLeave" className="input-field" placeholder="Total Unpaid Leave" onChange={handleChange} required />
-//         <input type="number" id="TotalAvailableOptionalLeave" name="TotalAvailableOptionalLeave" className="input-field" placeholder="Total Available Optional Leave" onChange={handleChange} required />
-
-//         <input type="text" id="Address" name="Address" className="input-field" placeholder="Address" onChange={handleChange} />
-//         <input type="date" id="Birthdate" name="Birthdate" className="input-field" onChange={handleChange} required />
-//         <input type="text" id="Designation" name="Designation" className="input-field" placeholder="Designation" onChange={handleChange} />
-//         <input type="text" id="EMPCode" name="EMPCode" className="input-field" placeholder="EMP Code" onChange={handleChange} />
-//         <input type="date" id="ResignationDate" name="ResignationDate" className="input-field" onChange={handleChange} />
-//         <input type="number" id="Category_Id" name="Category_Id" className="input-field" placeholder="Category ID" onChange={handleChange} />
-
-//         <button type="submit" id="submit-button" className="submit-button">Add Employee</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default AddEmployee;
+ 
 
 
 export default EditEmployee

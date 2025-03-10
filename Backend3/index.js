@@ -22,6 +22,9 @@ import { adminRouter } from "./Routes/AdminRoute.js";
 import { EmployeeRouter } from "./Routes/EmployeeRoute.js";
 import Jwt from "jsonwebtoken"
 import leaveRoutes from './Routes/leaveRoutes.js'
+import attendanceRoutes from './Routes/attendanceRoutes.js'
+// import attendanceRoutes from './Routes/attendanceRoutes.js'
+
 
 
 const app = express();
@@ -37,7 +40,10 @@ app.use(cookieParser()); // Required for handling cookies
 
 app.use("/auth", adminRouter);
 app.use("/employee", EmployeeRouter);
-app.use('/leave',leaveRoutes)
+app.use('/leave',leaveRoutes);
+app.use('/attendance',attendanceRoutes);
+// app.use('/api/attendance',attendanceRoutes);
+
 
 app.use(express.static('public'))
 

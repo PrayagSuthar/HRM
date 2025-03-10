@@ -7,18 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const AddCategory = () => {
     const [category, setCategory] = useState("")
     const navigate=useNavigate()
-    // const handleSubmit =(e) => {
-    //     e.preventDefault()
-    //     axios.post('http://localhost:3000/auth/add_category',{category})
-    //     .then(result => {
-    //         if(result.data.status){
-    //             navigate('/dashboard/category')
-    //         } else {
-    //             alert(result.data.Error)
-    //         }
-    //     })
-    //     .catch(err => console.log(err))
-    // }
+ 
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,7 +15,7 @@ const AddCategory = () => {
             headers: { "Content-Type": "application/json" }
         })
         .then(result => {
-            if(result.data.Status) { // Ensure case matches backend response
+            if(result.data.Status) {
                 navigate('/dashboard/category');
             } else {
                 alert(result.data.Error);

@@ -6,18 +6,7 @@ import axios from "axios";
 
 const Start = () => {
     const navigate=useNavigate()
-  // useEffect(() => {
-  //   axios.get('http://localhost:3000/verify')
-  //   .then(result => {
-  //     if(result.data.Status){
-  //       if(result.data.Role === "123e4567-e89b-12d3-a456-426614174000"){
-  //         navigate('/dashboard')
-  //       } else {
-  //         navigate(`/employee_detail/${result.data.Id}`)
-  //       }
-  //     } 
-  //   }).catch(err => console.log(err))
-  // },[])
+ 
 
  
   useEffect(() => {

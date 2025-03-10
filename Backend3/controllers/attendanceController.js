@@ -1,4 +1,4 @@
-import { markCheckIn, markCheckOut, getAttendance } from "../models/attendanceModel.js";
+import { markCheckIn, markCheckOut, getAttendance,getAllEmployeeAttendance } from "../models/attendanceModel.js";
 
 
 export const checkInEmployee = async (req, res) => {
@@ -9,7 +9,7 @@ export const checkInEmployee = async (req, res) => {
   res.json(result);
 };
 
-ut
+
 export const checkOutEmployee = async (req, res) => {
   const { Id } = req.body;
   if (!Id) return res.status(400).json({ success: false, message: "Employee ID is required" });
@@ -24,5 +24,10 @@ export const getAttendanceByEmployeeId = async (req, res) => {
   if (!Id) return res.status(400).json({ success: false, message: "Employee ID is required" });
 
   const records = await getAttendance(Id);
+  res.json(records);
+};
+
+export const getAllAttendance = async (req, res) => {
+  const records = await getAllEmployeeAttendance();
   res.json(records);
 };

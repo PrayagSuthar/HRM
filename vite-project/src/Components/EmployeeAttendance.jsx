@@ -76,7 +76,8 @@ const EmployeeAttendance = () => {
                     <td>{record.Date}</td>
                     <td>{record.CheckInTime || "N/A"}</td>
                     <td>{record.CheckOutTime || "N/A"}</td>
-                    <td>{record.TotalHours || "N/A"}</td>
+                    {/* <td>{record.TotalHours || "N/A"}</td> */}
+                    <td>{record.TotalHours !== null ? record.TotalHours.toFixed(2) : "N/A"}</td>
                   </tr>
                 ))}
               </tbody>

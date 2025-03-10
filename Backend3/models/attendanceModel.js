@@ -38,22 +38,48 @@ export const markCheckOut = async (EmployeeID) => {
   }
 };
 
-export const getAttendance = async (EmployeeID) => {
+export const getAttendance = async (Id) => {
   try {
     const pool = await poolPromise;
     const result = await pool
       .request()
-      .input("EmployeeID", sql.UniqueIdentifier, EmployeeID)
-      .query(
-        `SELECT Date, CheckInTime, CheckOutTime, 
-         DATEDIFF(HOUR, CheckInTime, CheckOutTime) AS TotalHours 
-         FROM EmployeeAttendance 
-         WHERE EmployeeID = @EmployeeID 
-         ORDER BY Date DESC`
-      );
+      .input("EmployeeID", sql.UniqueIdentifier, Id)
+      .query(`
+        SELECT 
+          Date,
+          CheckInTime,
+          CheckOutTime,
+          DATEDIFF(MINUTE, CheckInTime, CheckOutTime) / 60.0 AS TotalHours
+        FROM EmployeeAttendance
+        WHERE EmployeeID = @EmployeeID
+        ORDER BY Date DESC
+      `);
+
     return result.recordset;
   } catch (error) {
-    console.error("Fetch Attendance Error:", error);
+    console.error("Error fetching attendance:", error);
+    return [];
+  }
+};
+
+export const getAllEmployeeAttendance = async () => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.query(`
+      SELECT 
+        e.Id AS EmployeeID,
+        e.Name AS EmployeeName,
+        a.Date,
+        a.CheckInTime,
+        a.CheckOutTime,
+        DATEDIFF(MINUTE, a.CheckInTime, a.CheckOutTime) / 60.0 AS TotalHours
+      FROM EmployeeAttendance a
+      JOIN EmployeeInfo e ON a.EmployeeID = e.Id
+      ORDER BY a.Date DESC
+    `);
+    return result.recordset;
+  } catch (error) {
+    console.error("Error fetching all attendance records:", error);
     return [];
   }
 };

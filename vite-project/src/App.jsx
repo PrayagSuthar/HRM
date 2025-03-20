@@ -40,7 +40,7 @@ function App() {
         </Route>
 
         {/* Admin Dashboard */}
-        <Route path="/dashboard" element={
+        <Route path="/dashboard/:Id" element={
           <PrivateRoute>
             <Dashboard />
           </PrivateRoute>

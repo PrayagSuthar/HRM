@@ -29,8 +29,8 @@ router.post("/adminlogin", async (req, res) => {
     const pool = await poolPromise;
     const result = await pool
       .request()
-      .input("email", sql.NVarChar(100), Email)
-      .input("password",sql.NVarChar(255),Password)
+      .input("Email", sql.NVarChar(100), Email)
+      .input("Password",sql.NVarChar(255),Password)
       .query("SELECT * FROM EmployeeDetailss WHERE Email = @Email and Password=@Password");
 
     if (result.recordset.length === 0) {
@@ -40,10 +40,10 @@ router.post("/adminlogin", async (req, res) => {
     const user = result.recordset[0];
 
    
-    const token = jwt.sign({ role: "admin", email: user.Email ,Id:user.Id}, "jwt_secret_key", { expiresIn: "1d" });
+    const token = jwt.sign({ role: "employee", email: user.Email , Id:user.Id} ,"jwt_secret_key", { expiresIn: "1d" });
 
     res.cookie("token", token, { httpOnly: true, secure: false });
-    return res.json({ loginStatus: true, word:result });
+    return res.json({ loginStatus: true, Id:user.Id});
    
   } catch (err) {
     console.error("Database query error:", err);
